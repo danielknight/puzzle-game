@@ -1,0 +1,13 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\Project1\Assets\Scripts\Game\StarshipControl.js">
+    <Files>
+      <File FileName="..\Project1\Assets\Scripts\Game\Respawner.js" Line="34" Column="3" />
+      <File FileName="..\Project1\Assets\Scripts\Game\StarshipControl.js" Line="59" Column="2" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

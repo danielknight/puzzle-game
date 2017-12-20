@@ -1,0 +1,132 @@
+﻿#pragma strict
+
+import System.Collections.Generic;
+
+var tiles : Tile[,] = new Tile[5,5];
+var gridWidth : int;
+var gridHeight : int;
+var tilePrefab : Tile;
+var tileTypes : Tile[];
+var start : int = 0;
+var endIndex : int = 0;
+var curType : String;
+var nextType : String;
+
+function Start () {
+	var i : int;
+	var j : int = 0;
+	for(var y=0; y<gridHeight; y++) {
+		i = 0;
+		for(var x=0; x<gridWidth; x++) {
+			var t : Tile = Instantiate(tilePrefab, Vector3(x,y,0), Quaternion.identity);
+			t.transform.parent = gameObject.transform;
+			tiles[i++,j] = t;
+		}
+		j++;
+	}
+	//gameObject.transform.position = new Vector3(0, 1.01f, 0);
+}
+
+
+
+function isMatch(board : Tile[,]) {
+	//loop thru rowspaces
+	for( var i = 0; i < gridHeight; i++) {
+		if(threeRowTilesMatch(tiles, i)){
+			return true;
+		}
+	}
+	//loop thru col space
+	for( i = 0 ; i <gridWidth; i++) {
+		if(threeRowTilesMatch(tiles, i)){
+			return true;
+		}
+	}
+	return false;
+}
+
+
+function threeRowTilesMatch(board : Tile[,], column : int){//assumes checking left to right, increasing
+	start = 0;
+	endIndex = 0;
+	curType = board[0,column].type;
+	for( var i = 0; i<gridWidth-1; i++) {
+		if((endIndex - start) < 2 ) {
+			if(board[i+1,column].type != curType) {
+				curType = board[i+1,column].type;
+				start = i + 1;
+				endIndex = start;
+			} 
+			else endIndex++;
+		}
+		else{
+			if(board[i+1,column].type != curType) {
+				// return start idx, end idx and true (catches 3 and 4 match cases)
+				return true;
+			}
+			else endIndex++;
+		}
+	}
+	if(endIndex - start >= 2){
+		//return start idx, end idx and true  (catches all 5 match case)
+		return true;
+	}
+	return false;
+}
+
+function threeColTilesMatch( board : Tile[,], row : int) { //assumes we are checking bottom to top, increasing
+	start = 0;
+	endIndex = 0;
+	curType = board[row,0].type;
+	for(var i = 0; i < gridHeight-1; i++) {
+		if((endIndex -start) < 2) {
+			nextType = board[row, i+1].type;
+			if(board[row,i+1].type != curType) {
+				curType = board[row, i+1].type;
+				start = i+1;
+				endIndex = start;
+			}
+			else endIndex++;
+		}
+		else {
+			if(board[row, i+1].type != curType) {
+				return true;
+			}
+			else endIndex++;
+		}
+	}
+	if(endIndex-start >=2) {
+		return true;
+	}	
+	return false;
+}
+
+function updateBoard () {
+	var i : int = 0;
+	var j : int = 0;
+	
+	for(var y=0; y<gridHeight; y++) {
+		for(var x=0; x<gridWidth; x++) {
+			//check board positons (units of 1)
+			
+			
+			
+			var tile : Tile = Physics.OverlapSphere(Vector3(x,y,0), .5)[0].gameObject.GetComponent(typeof(tilePrefab)) as Tile; //[0].attachedRigidbody.mass;
+			//Debug.Log(Physics.OverlapSphere(Vector3(x,y,0), .5).length);
+			//Debug.Log(tile.type + 'is color of ['+x+" , " + y+ "]");
+			tiles[i,j] = tile;  
+			//Debug.Log(tiles[0,y].type +"is the type of [0," + y +"]");
+			//Debug.Log("Tile["+x+","+ y+ "] color:" +tiles[i,j].color);
+			if(i<gridWidth-1) i++;
+			else i = 0;
+		}
+		if(j<gridHeight-1) j++;
+		else j = 0;
+	}
+	if(threeRowTilesMatch(tiles,0)) Debug.Log("row match exists");
+	if(threeColTilesMatch(tiles,0)) Debug.Log("Col match exists");
+}
+
+function Update () {
+	
+}

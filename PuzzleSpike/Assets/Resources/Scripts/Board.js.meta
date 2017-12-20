@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 8ef600166041691499b9a14bd45997b0
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - tilePrefab: {fileID: 179934, guid: f07f21b74996e404c836fbb802e6f9e4, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

@@ -1,0 +1,22 @@
+﻿#pragma strict
+
+var tileMats : String[] = [ "Blue", "Red", "Green" ];
+var color : String;
+var sphere : GameObject;
+var type : String;
+
+function createGem(){
+	color = tileMats[Random.Range(0, tileMats.Length)];
+	type = color;
+	var m : Material =  Resources.Load("Materials/" + color) as Material;
+	Debug.Log(m);
+	sphere.renderer.material = m;
+}
+
+function Start () {
+	createGem();
+}
+
+function Update () {
+	
+}
